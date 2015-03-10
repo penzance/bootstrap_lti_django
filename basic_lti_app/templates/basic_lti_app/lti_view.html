@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Basic LTI App</title>
+</head>
+<body>
+
+<h1>LTI Params</h1>
+
+<table>
+{% for k,v in lti_params_dict.iteritems %}
+	<tr><td>{{ k }}</td><td>{{ v }}</td></tr>
+{% endfor %}
+</table>
+
+</body>
+</html>

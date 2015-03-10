@@ -1,7 +1,7 @@
 '''
 THIS FILE IS AN EXAMPLE ONLY!
-None of the settings in this file will work out of the box
-You should include this file in your .gitignore
+NONE OF THE SETTINGS IN THIS FILE WILL WORK OUT OF THE BOX
+RENAME THIS FILE TO SECURE.py AND INCLUDE THIS FILE IN YOUR .GITIGNORE
 '''
 SECURE_SETTINGS = {
 	'django_db_user': 'changeme',

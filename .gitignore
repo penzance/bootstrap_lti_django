@@ -55,4 +55,6 @@ target/
 
 .idea/
 .vagrant/
+secure.py
+
 

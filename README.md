@@ -7,6 +7,7 @@ cd bootstrap_lti
 vagrant up
 vagrant ssh
 pip install -r bootstrap_lti/requirements/local.txt --upgrade
+python manage.py syncdb
 python manage.py runsslserver 0.0.0.0:8000
 
 now open a browser and enter:

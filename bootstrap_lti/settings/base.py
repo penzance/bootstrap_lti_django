@@ -25,7 +25,8 @@ DJANGO_PROJECT_CONFIG = dirname(dirname(abspath(__file__)))
 # Absolute filesystem path to the top-level project folder:
 # (this is one directory up from the project config directory)
 SITE_ROOT = dirname(DJANGO_PROJECT_CONFIG)
-
+print 'SITE_ROOT: %s' % SITE_ROOT
+print 'DJANGO_PROJECT_CONFIG: %s' % DJANGO_PROJECT_CONFIG
 # Site name:
 SITE_NAME = basename(SITE_ROOT)
 

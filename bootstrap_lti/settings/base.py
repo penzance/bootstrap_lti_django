@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from os.path import abspath, basename, dirname, join, normpath
+from django.core.urlresolvers import reverse_lazy
 from sys import path
 from .secure import SECURE_SETTINGS
 
@@ -50,12 +51,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
+    #'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #'lti_templates',
     'crispy_forms',
     'basic_lti_app',
 )
@@ -73,6 +75,11 @@ MIDDLEWARE_CLASSES = (
 AUTHENTICATION_BACKENDS = (
     'django_auth_lti.backends.LTIAuthBackend',
 )
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+
+LOGIN_URL = reverse_lazy('lti_auth_error')
 
 ROOT_URLCONF = 'bootstrap_lti.urls'
 
@@ -127,5 +134,5 @@ TEMPLATE_DIRS = (
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-
+LTI_OAUTH_CREDENTIALS = SECURE_SETTINGS.get('lti_oauth_credentials', None)
 

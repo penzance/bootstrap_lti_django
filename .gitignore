@@ -56,5 +56,6 @@ target/
 .idea/
 .vagrant/
 secure.py
+*.sqlite3
 
 

@@ -25,15 +25,13 @@ DJANGO_PROJECT_CONFIG = dirname(dirname(abspath(__file__)))
 # Absolute filesystem path to the top-level project folder:
 # (this is one directory up from the project config directory)
 SITE_ROOT = dirname(DJANGO_PROJECT_CONFIG)
-print 'SITE_ROOT: %s' % SITE_ROOT
-print 'DJANGO_PROJECT_CONFIG: %s' % DJANGO_PROJECT_CONFIG
+
 # Site name:
 SITE_NAME = basename(SITE_ROOT)
 
 # Add our project to our pythonpath, this way we don't need to type our project
 # name in our dotted import paths:
 path.append(SITE_ROOT)
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/

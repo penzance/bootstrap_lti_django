@@ -2,31 +2,20 @@
 <html>
 <head>
 <title>Basic LTI App</title>
-
-    <link href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.css" type="text/css">
-
 </head>
 <body>
 
 <h1>LTI Params</h1>
 
-<table id="lti_table" class="display dataTable" cellspacing="0" width="100%">
+<table>
     <thead>
     <tr><th>LTI Param Name</th><th>Value</th></tr>
     </thead>
     <tbody>
-{% for k,v in lti_params_dict.iteritems %}
-	<tr><td>{{ k }}</td><td>{{ v }}</td></tr>
-{% endfor %}
+    {% for k,v in lti_params_dict.iteritems %}
+	    <tr><td>{{ k }}</td><td>{{ v }}</td></tr>
+    {% endfor %}
     </tbody>
-
 </table>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
-<script type="application/javascript">
-        $(document).ready(function() {
-            $('#lti_table').DataTable();
-        });
-</script>
 </body>
 </html>

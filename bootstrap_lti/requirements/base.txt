@@ -4,3 +4,7 @@ requests
 django-cached-authentication-middleware>=0.2.0
 django-crispy-forms
 
+git+ssh://git@github.com/penzance/canvas_python_sdk.git@v0.7b5#egg=canvas-python-sdk
+git+ssh://git@github.com/Harvard-University-iCommons/django-auth-lti.git@develop#egg=django-auth-lti
+
+

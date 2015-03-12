@@ -3,17 +3,23 @@
 <head>
 <title>Basic LTI App</title>
 </head>
+<style>
+    th { background: lightgray}
+    tr:nth-child(even) {background: #FFF}
+    tr:nth-child(odd) {background: lightblue}
+    #lti-table {margin-left: 5px; }
+</style>
 <body>
 
 <h1>LTI Params</h1>
 
-<table>
+<table id="lti-table" width="80%" cellpadding="2px" cellspacing="2px">
     <thead>
-    <tr><th>LTI Param Name</th><th>Value</th></tr>
+    <tr><th>Num</th><th>LTI Param Name</th><th>Value</th></tr>
     </thead>
     <tbody>
     {% for k,v in lti_params_dict.iteritems %}
-	    <tr><td>{{ k }}</td><td>{{ v }}</td></tr>
+	    <tr><td>{{forloop.counter}}</td><td>{{ k }}</td><td>{{ v }}</td></tr>
     {% endfor %}
     </tbody>
 </table>

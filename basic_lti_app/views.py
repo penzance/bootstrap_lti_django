@@ -43,8 +43,12 @@ def main(request):
     """
     The main method dipslay the default view which is the map_view.
     """
-    canvas_course_id = request.session['LTI_LAUNCH']['custom_canvas_course_id']
-    users = get_all_list_data(SDK_CONTEXT, enrollments.list_enrollments_courses, canvas_course_id)
+    users = {}
+    
+    # if the param custom_canvas_course_id is missing don't make the SDK call
+    canvas_course_id = request.session['LTI_LAUNCH'].get('custom_canvas_course_id')
+    if canvas_course_id:
+        users = get_all_list_data(SDK_CONTEXT, enrollments.list_enrollments_courses, canvas_course_id)
 
     lti_params_dict = request.session.get('LTI_LAUNCH', {})
 

@@ -30,12 +30,15 @@ SECURE_SETTINGS = {
 }
 ```
 
+In base.py you will need to add or edit the following section. You will need to update the 
+base_api_url with the url of your canvas instance. 
+
 base.py
 ```
 
 CANVAS_SDK_SETTINGS = {
     'auth_token': SECURE_SETTINGS.get('canvas_token', None),
-    'base_api_url': 'https://your canvas domian name here/api',
+    'base_api_url': 'https://your-canvas-domain-name-here/api', # you need to add your own canvas domain here
     'max_retries': 3,
     'per_page': 40,
 }

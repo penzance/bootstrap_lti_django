@@ -6,7 +6,6 @@ git clone https://github.com/penzance/bootstrap_lti.git
 cd bootstrap_lti
 vagrant up
 vagrant ssh
-workon bootstrap_lti
 pip install -r bootstrap_lti/requirements/local.txt --upgrade
 ```
 You will need to obtain a Canvas Integration Token. See this url

@@ -9,7 +9,7 @@ vagrant ssh
 pip install -r bootstrap_lti/requirements/local.txt --upgrade
 
 # note you should be in a virtual env called bootstrap_lti now
-# if not "run workon bootstrap_lti"
+# if not run "workon bootstrap_lti"
 
 ```
 You will need to obtain a Canvas Integration Token. See this url

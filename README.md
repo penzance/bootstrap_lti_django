@@ -7,6 +7,10 @@ cd bootstrap_lti
 vagrant up
 vagrant ssh
 pip install -r bootstrap_lti/requirements/local.txt --upgrade
+
+# note you should be in a virtual env called bootstrap_lti now
+# if not run "workon bootstrap_lti"
+
 ```
 You will need to obtain a Canvas Integration Token. See this url
 for more info: https://canvas.instructure.com/doc/api/file.oauth.html
@@ -46,7 +50,8 @@ CANVAS_SDK_SETTINGS = {
 
 ```
 python manage.py syncdb
-python manage.py runsslserver 0.0.0.0:8000
+python manage.py collectstatic
+python manage.py runsslserver --addrport 0.0.0.0:8000
 
 now open a browser and enter:
 https://localhost:8000/lti_tools/basic_lti_app/tool_config

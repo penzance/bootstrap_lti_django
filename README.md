@@ -50,6 +50,7 @@ CANVAS_SDK_SETTINGS = {
 
 ```
 python manage.py syncdb
+python manage.py collectstatic
 python manage.py runsslserver --addrport 0.0.0.0:8000
 
 now open a browser and enter:

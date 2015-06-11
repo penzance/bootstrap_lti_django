@@ -50,7 +50,7 @@ CANVAS_SDK_SETTINGS = {
 
 ```
 python manage.py syncdb
-python manage.py runsslserver 0.0.0.0:8000
+python manage.py runsslserver --addrport 0.0.0.0:8000
 
 now open a browser and enter:
 https://localhost:8000/lti_tools/basic_lti_app/tool_config

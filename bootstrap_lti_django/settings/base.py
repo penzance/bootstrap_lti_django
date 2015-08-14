@@ -1,5 +1,5 @@
 """
-Django settings for bootstrap_lti project.
+Django settings for bootstrap_lti_django project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.6/topics/settings/
@@ -80,9 +80,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 LOGIN_URL = reverse_lazy('lti_auth_error')
 
-ROOT_URLCONF = 'bootstrap_lti.urls'
+ROOT_URLCONF = 'bootstrap_lti_django.urls'
 
-WSGI_APPLICATION = 'bootstrap_lti.wsgi.application'
+WSGI_APPLICATION = 'bootstrap_lti_django.wsgi.application'
 
 
 # Database
@@ -142,7 +142,7 @@ LTI_OAUTH_CREDENTIALS = SECURE_SETTINGS.get('lti_oauth_credentials', None)
 # https://canvas.instructure.com/doc/api/file.oauth.html
 CANVAS_SDK_SETTINGS = {
     'auth_token': SECURE_SETTINGS.get('canvas_token', None),
-    'base_api_url': 'https://canvas-sandbox.tlt.harvard.edu/api',
+    'base_api_url': SECURE_SETTINGS.get('base_api_url', None),
     'max_retries': 3,
     'per_page': 40,
 }

@@ -30,19 +30,24 @@ SECURE_SETTINGS = {
 	'admins': (
 		('Admin User', 'admin_user@example.com'),
 	),
-	'canvas_token' : 'your-Canvas-Integration-Token', # add your canvas token here
+
+	# You will need to update the base_api_url with the url 
+	# of your canvas instance. 
+	'base_api_url' : 'https://your-canvas-domain-name-here/api',
+
+	# add your canvas token here
+	'canvas_token' : 'your-Canvas-Integration-Token', 
 }
 ```
 
-In base.py you will need to add or edit the following section. You will need to update the 
-base_api_url with the url of your canvas instance. 
+In base.py you will need to add or edit the following section. 
 
 base.py
 ```
 
 CANVAS_SDK_SETTINGS = {
-    'auth_token': SECURE_SETTINGS.get('canvas_token', None),
-    'base_api_url': 'https://your-canvas-domain-name-here/api', # you need to add your own canvas domain here
+    'auth_token': SECURE_SETTINGS.get('canvas_token'),
+    'base_api_url': SECURE_SETTINGS.get('base_api_url'),
     'max_retries': 3,
     'per_page': 40,
 }

@@ -88,6 +88,12 @@ WSGI_APPLICATION = 'bootstrap_lti_django.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
+# Note - if you configure a database, you can store the database
+# access credentials in the secure.py file. Just make sure that
+# you do not remove secure.py from the .gitignore file. secure.py
+# should never be uploaded to git. Secure.py.example is there to
+# show you what secure.py should look like.
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

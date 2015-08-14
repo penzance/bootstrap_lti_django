@@ -2,16 +2,38 @@
 THIS FILE IS AN EXAMPLE ONLY!
 NONE OF THE SETTINGS IN THIS FILE WILL WORK OUT OF THE BOX
 RENAME THIS FILE TO secure.py 
+
+Note - the .gitignore file is setup to exclude secure.py
+from git. secure.py should never be put under version control.
+
 '''
 SECURE_SETTINGS = {
+	# you only need to change the database settings
+	# if your app needs to access a database
+	# you would also need to configure the
+	# database in base.py. These settings are
+	# here just to show you that you can put secure 
+	# settings in this file. 
 	'django_db_user': 'changeme',
 	'django_db_pass': 'changeme',
+
+	# required for Django
 	'django_secret_key': 'changeme,',
+
+	# required for LTI
 	'lti_oauth_credentials': {
 		'key': 'value',
 	},
+	
 	'admins': (
 		('Admin User', 'admin_user@example.com'),
 	),
+	
+	# You will need to update the base_api_url with the url 
+	# of your canvas instance.
+	'base_api_url' : 'https://path-to-your-canvas-instance/api',
+
+	# You will need to obtain a Canvas Integration Token. See this url
+    # for more info: https://canvas.instructure.com/doc/api/file.oauth.html
 	'canvas_token' : 'changeme',
 }

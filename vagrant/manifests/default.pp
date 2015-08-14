@@ -202,27 +202,27 @@ file {'/etc/profile.d/venvwrapper.sh':
     require => Package['virtualenvwrapper'],
 }
 
-# Create a symlink from ~/bootstrap_lti to /vagrant as a convenience for the developer
-file {'/home/vagrant/bootstrap_lti':
+# Create a symlink from ~/bootstrap_lti_django to /vagrant as a convenience for the developer
+file {'/home/vagrant/bootstrap_lti_django':
     ensure => link,
     target => '/vagrant',
 }
 
 # Create a virtualenv for <project_name>
-#require => [ Package['virtualenvwrapper'], File['/home/vagrant/bootstrap_lti'], File['/etc/profile.d/oracle.sh'] ],
+#require => [ Package['virtualenvwrapper'], File['/home/vagrant/bootstrap_lti_django'], File['/etc/profile.d/oracle.sh'] ],
 exec {'create-virtualenv':
     provider => 'shell',
     user => 'vagrant',
     group => 'vagrant',
-    require => [ Package['virtualenvwrapper'], File['/home/vagrant/bootstrap_lti'] ],
+    require => [ Package['virtualenvwrapper'], File['/home/vagrant/bootstrap_lti_django'] ],
     environment => ["HOME=/home/vagrant","WORKON_HOME=/home/vagrant/.virtualenvs"],
     command => '/vagrant/vagrant/venv_bootstrap.sh',
-    creates => '/home/vagrant/.virtualenvs/bootstrap_lti',
+    creates => '/home/vagrant/.virtualenvs/bootstrap_lti_django',
 }
 
 # Active this virtualenv upon login
 file {'/home/vagrant/.bash_profile':
     owner => 'vagrant',
-    content => 'echo "Activating python virtual environment \"bootstrap_lti\""; workon bootstrap_lti',
+    content => 'echo "Activating python virtual environment \"bootstrap_lti_django\""; workon bootstrap_lti_django',
     require => Exec['create-virtualenv'],
 }

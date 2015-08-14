@@ -5,10 +5,13 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from ims_lti_py.tool_config import ToolConfig
 from django.http import HttpResponse
-from canvas_sdk.methods import enrollments
+from canvas_sdk.methods import (enrollments, courses)
 from canvas_sdk.utils import get_all_list_data
 from canvas_sdk.exceptions import CanvasAPIError
 from canvas_sdk import RequestContext
+import logging
+
+logger = logging.getLogger(__name__)
 
 SDK_CONTEXT = request_context = RequestContext(**settings.CANVAS_SDK_SETTINGS)
 
@@ -44,15 +47,26 @@ def main(request):
     The main method dipslay the default view which is the map_view.
     """
     users = {}
+    user_courses = {}
     
     # if the param custom_canvas_course_id is missing don't make the SDK call
     canvas_course_id = request.session['LTI_LAUNCH'].get('custom_canvas_course_id')
+    logger.debug('canvas_course_id=%s' % canvas_course_id)
     if canvas_course_id:
-        users = get_all_list_data(SDK_CONTEXT, enrollments.list_enrollments_courses, canvas_course_id)
+        try:
+            users = get_all_list_data(SDK_CONTEXT, enrollments.list_enrollments_courses, canvas_course_id)
+        except CanvasAPIError as api_error:
+            logger.debug('CanvasAPIError in get_all_list_data enrollments.list_enrollments_courses call for canvas_course_id=%s. Exception=%s:' % (canvas_course_id, api_error))
+
+        try:
+            user_courses = get_all_list_data(SDK_CONTEXT, courses.list_your_courses, include="term")
+            logger.debug('courses: %s' % user_courses)
+        except CanvasAPIError as api_error:
+            logger.debug('CanvasAPIError in get_all_list_data courses.list_your_courses call. Exception=%s:' % api_error)
 
     lti_params_dict = request.session.get('LTI_LAUNCH', {})
 
-    return render(request, 'basic_lti_app/lti_view.html', {'request': request, 'lti_params_dict': lti_params_dict, 'enrollments': users})
+    return render(request, 'basic_lti_app/lti_view.html', {'request': request, 'lti_params_dict': lti_params_dict, 'enrollments': users, 'courses': user_courses})
 
 @require_http_methods(['GET'])
 def tool_config(request):

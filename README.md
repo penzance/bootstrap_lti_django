@@ -1,6 +1,11 @@
 # boostrap_lti
 
-Quick Start
+## Quick Start
+
+### Getting Started with Penzance and VirtualBox
+If you would like to use the virtual machine configured for the bootstrap_LIT application, will need to download both Vagrant (https://www.vagrantup.com/downloads.html) and VirtualBox (https://www.virtualbox.org/wiki/Downloads). The following instructions assume Vagrant and VirtualBox are installed.
+
+### Downloading the Repository and Configuring Vagrant
 ```
 git clone https://github.com/penzance/bootstrap_lti_django.git
 cd bootstrap_lti_django
@@ -10,60 +15,76 @@ pip install -r bootstrap_lti_django/requirements/local.txt --upgrade
 
 # note you should be in a virtual env called bootstrap_lti_django now
 # if not run "workon bootstrap_lti_django"
+```
+
+![Vagrant Screenshot](/images/vagrant_ssh.png)
+
+### Obtain Canvas Integration Token
+You will need to obtain a Canvas Integration Token. For more information about using tokens see: https://canvas.instructure.com/doc/api/file.oauth.html
+
+You may obtain a token from the Canvas settings page:
+
+![Obtain API Key 1](/images/obtain_api_key.png)
+![Obtain API Key 2](/images/obtain_api_key_2.png)
+
+### Edit secure.py
+
+You must edit `secure.py` before deploying your application. The file `secure.py.example` can be used as a template. You must change all of the default values. If you do not have a `django_secret_key`, you may use the following commands to obtain one:
 
 ```
-You will need to obtain a Canvas Integration Token. See this url
-for more info: https://canvas.instructure.com/doc/api/file.oauth.html
+cd ~/junk # Go to some safe directory to create a new project.
+django-admin startproject django_scratch
+grep SECRET_KEY django_scratch/django_scratch/settings.py # copy to old project
+rm -R django_scratch
+```
+Remember the key and value you choose for `lti_oauth_credentials`; you will need this when installing the tool in Canvas.
 
-Once you have your token, you will need to add the token to the secure.py file and 
-edit the base.py file in the settings folder.
-
-secure.py
+secure.py.example
 ```
 SECURE_SETTINGS = {
+	# you only need to change the database settings
+	# if your app needs to access a database
+	# you would also need to configure the
+	# database in base.py. These settings are
+	# here just to show you that you can put secure 
+	# settings in this file. 
 	'django_db_user': 'changeme',
 	'django_db_pass': 'changeme',
-	'django_secret_key': 'your-django-secret-key', 
+
+	# required for Django
+	'django_secret_key': 'changeme,',
+
+	# required for LTI
 	'lti_oauth_credentials': {
-		'test': 'test', # you will not want to use these values for production
+		'key': 'value',
 	},
+	
 	'admins': (
 		('Admin User', 'admin_user@example.com'),
 	),
-
+	
 	# You will need to update the base_api_url with the url 
-	# of your canvas instance. 
-	'base_api_url' : 'https://your-canvas-domain-name-here/api',
+	# of your canvas instance.
+	'base_api_url' : 'https://path-to-your-canvas-instance/api',
 
-	# add your canvas token here
-	'canvas_token' : 'your-Canvas-Integration-Token', 
+	# You will need to obtain a Canvas Integration Token. See this url
+    # for more info: https://canvas.instructure.com/doc/api/file.oauth.html
+	'canvas_token' : 'changeme',
 }
 ```
 
-In base.py you will need to add or edit the following section. 
-
-base.py
-```
-
-CANVAS_SDK_SETTINGS = {
-    'auth_token': SECURE_SETTINGS.get('canvas_token'),
-    'base_api_url': SECURE_SETTINGS.get('base_api_url'),
-    'max_retries': 3,
-    'per_page': 40,
-}
-```
-
+### Initialize project
 ```
 python manage.py syncdb
+# You need to decide if you would like to create a superuser
 python manage.py collectstatic
 python manage.py runsslserver --addrport 0.0.0.0:8000
-
-now open a browser and enter:
-https://localhost:8000/lti_tools/basic_lti_app/tool_config
-
-You can use the XML from the url above to install the tool into your LMS.
-
 ```
+Now open a browser and enter:
+`https://localhost:8000/lti_tools/basic_lti_app/tool_config`
+Your browser will likely block you from viewing this page. You must override this.
+![Chrome Security Warning](/images/chrome_error.png)
+Copy all the XML data; you will need this to install your tool in Canvas.
 
 Tool Config XML Example
 ```
@@ -89,3 +110,9 @@ Tool Config XML Example
 	</blti:extensions>
 </cartridge_basiclti_link>
 ```
+### Install tool on Canvas
+Navigate to the settings page of the COURSE you would like to install the tool for. (Note that this settings page can be found on the left sidebar of the course page. This is different from the settings page found in the upper right toolbar.)
+![Add tool to Canvas 1](/images/add_app_canvas.png)
+Click the "Add New App" button.
+You may choose any name for the tool. Consumer Key and Shared Secret must be the key and value you choose for `lti_oauth_credentials` in `secure.py`. Configuration type should be Paste XML. In the following text box, paste the XML that was generated at `https://localhost:8000/lti_tools/basic_lti_app/tool_config`
+![Add tool to Canvas 2](/images/add_app_canvas_2.png)
